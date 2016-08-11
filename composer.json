@@ -1,4 +1,7 @@
 {
+    "autoload": {
+        "psr-4": { "Omnipay\\Checkout.fi\\" : "src/" }
+    },
     "require": {
         "omnipay/common": "~2.0"
     },
