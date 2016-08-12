@@ -25,8 +25,11 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
+            'paymentUrl' => 'https://payment.checkout.fi',
             'merchantId' => '',
             'merchantSecret' => '',
+            'hashKey' => '',
+            'returnUrl' => '',
             'testMode' => false
         );
     }
@@ -49,6 +52,16 @@ class Gateway extends AbstractGateway
     public function setMerchantSecret($merchantSecret)
     {
         $this->setParameter('merchantSecret', $merchantSecret);
+    }
+
+    public function getReturnUrl()
+    {
+        return $this->getParameter('returnUrl');
+    }
+
+    public function setReturnUrl($returnUrl)
+    {
+        $this->setParameter('returnUrl', $returnUrl);
     }
 
     public function purchase(array $parameters = array())
