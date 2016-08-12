@@ -9,6 +9,6 @@
         "omnipay/tests": "~2.0"
     },
     "scripts": {
-        "test": "vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text tests"
+        "test": "vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit tests"
     }
 }

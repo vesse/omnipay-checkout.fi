@@ -28,6 +28,9 @@ class Gateway extends AbstractGateway
         return array(
             'merchantId' => '',
             'hashKey' => '',
+            'device' => '1',
+            'type' => '0',
+            'algorithm' => '3',
             'testMode' => false
         );
     }
@@ -40,6 +43,36 @@ class Gateway extends AbstractGateway
     public function setMerchantId($merchantId)
     {
         $this->setParameter('merchantId', $merchantId);
+    }
+
+    public function getDevice()
+    {
+        return $this->getParameter('device');
+    }
+
+    public function setDevice($device)
+    {
+        $this->setParameter('device', $device);
+    }
+
+    public function getType()
+    {
+        return $this->getParameter('type');
+    }
+
+    public function setType($type)
+    {
+        $this->setParameter('type', $type);
+    }
+
+    public function getAlgorithm()
+    {
+        return $this->getParameter('algorithm');
+    }
+
+    public function setAlgorithm($algorithm)
+    {
+        $this->setParameter('algorithm', $algorithm);
     }
 
     public function purchase(array $parameters = array())
