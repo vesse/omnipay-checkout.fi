@@ -56,6 +56,6 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-
+        return $this->httpClient->request('POST', $this->getPaymentUrl(), ['form_params' => $data]);
     }
 }
