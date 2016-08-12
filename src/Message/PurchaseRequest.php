@@ -19,7 +19,7 @@ class PurchaseRequest extends AbstractRequest
             'REFERENCE'     = $this->getReference(),
             'MESSAGE'       = $this->getMessage(),
             'LANGUAGE'      = $this->getLanguage(),
-            'MERCHANT'      = $this->getMerchant(),
+            'MERCHANT'      = $this->getMerchantId(),
             'RETURN'        = $this->getReturnUrl(),
             'CANCEL'        = $this->getReturnUrl(),
             'REJECT'        = $this->getReturnUrl(),
