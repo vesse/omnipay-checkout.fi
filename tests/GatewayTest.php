@@ -14,8 +14,14 @@ class CheckoutFiGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        // TODO: paypal-gw just does new Gateway... Better?
         $this->gateway = Omnipay::create('CheckoutFi');
+
+        $this->gateway->initialize(
+            array(
+                'merchantId' => CHECKOUT_FI_MERCHANT_ID,
+                'hashKey' => CHECKOUT_FI_HASH_KEY
+            )
+        );
     }
 
     public function testGetName()
