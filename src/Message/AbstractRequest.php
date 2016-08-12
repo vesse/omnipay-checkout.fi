@@ -14,4 +14,29 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         return $this->getParameter('merchantId');
     }
+
+    public function setMerchantId($merchantId)
+    {
+        $this->setParameter('merchantId', $merchantId);
+    }
+
+    public function getMerchantSecret()
+    {
+        return $this->getParameter('merchantSecret');
+    }
+
+    public function setMerchantSecret($merchantSecret)
+    {
+        $this->setParameter('merchantSecret', $merchantSecret);
+    }
+
+    public function getReturnUrl()
+    {
+        return $this->getParameter('returnUrl');
+    }
+
+    public function setReturnUrl($returnUrl)
+    {
+        $this->setParameter('returnUrl', $returnUrl);
+    }
 }
