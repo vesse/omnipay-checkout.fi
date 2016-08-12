@@ -189,5 +189,4 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         $this->setParameter('phone', $phone);
     }
-
 }
