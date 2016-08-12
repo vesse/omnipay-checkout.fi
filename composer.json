@@ -1,11 +1,14 @@
 {
     "autoload": {
-        "psr-4": { "Omnipay\\Checkout.fi\\" : "src/" }
+        "psr-4": { "Omnipay\\CheckoutFi\\" : "src/" }
     },
     "require": {
         "omnipay/common": "~2.0"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text tests"
     }
 }

@@ -8,3 +8,42 @@
  *
  */
 namespace Omnipay\CheckoutFi;
+
+use Omnipay\Common\AbstractGateway;
+
+/**
+ * Checkout.fi Omnipay gateway
+ */
+class Gateway extends AbstractGateway
+{
+
+    public function getName()
+    {
+        return 'Checkout.fi';
+    }
+
+    public function getDefaultParameters()
+    {
+        // TODO: Rest of the parameters
+        return array(
+            'merchantId' => '',
+            'hashKey' => '',
+            'testMode' => false
+        );
+    }
+
+    public function getMerchantId()
+    {
+        return $this->getParameter('merchantId');
+    }
+
+    public function setMerchantId($merchantId)
+    {
+        $this->setParameter('merchantId', $merchantId);
+    }
+
+    public function purchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\CheckoutFi\Message\PurchaseRequest', $parameters);
+    }
+}
