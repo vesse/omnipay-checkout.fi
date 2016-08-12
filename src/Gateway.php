@@ -24,13 +24,9 @@ class Gateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        // TODO: Rest of the parameters
         return array(
             'merchantId' => '',
-            'hashKey' => '',
-            'device' => '1',
-            'type' => '0',
-            'algorithm' => '3',
+            'merchantSecret' => '',
             'testMode' => false
         );
     }
@@ -45,34 +41,14 @@ class Gateway extends AbstractGateway
         $this->setParameter('merchantId', $merchantId);
     }
 
-    public function getDevice()
+    public function getMerchantSecret()
     {
-        return $this->getParameter('device');
+        return $this->getParameter('merchantSecret');
     }
 
-    public function setDevice($device)
+    public function setMerchantSecret($merchantSecret)
     {
-        $this->setParameter('device', $device);
-    }
-
-    public function getType()
-    {
-        return $this->getParameter('type');
-    }
-
-    public function setType($type)
-    {
-        $this->setParameter('type', $type);
-    }
-
-    public function getAlgorithm()
-    {
-        return $this->getParameter('algorithm');
-    }
-
-    public function setAlgorithm($algorithm)
-    {
-        $this->setParameter('algorithm', $algorithm);
+        $this->setParameter('merchantSecret', $merchantSecret);
     }
 
     public function purchase(array $parameters = array())
