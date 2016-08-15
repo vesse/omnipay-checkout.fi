@@ -7,12 +7,18 @@ namespace Omnipay\CheckoutFi\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Purchase response message from checkout.fi
  */
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
+    public function __construct(RequestInterface $request, $data)
+    {
+        parent::__construct($request, $data);
+    }
+
     public function isSuccessful()
     {
         return false;
@@ -25,7 +31,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        return $this->data['location'];
+        return $this->isRedirect() ? $this->data['location'] : null;
     }
 
     public function getRedirectMethod()

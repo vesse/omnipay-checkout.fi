@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Mon, 15 Aug 2016 08:53:49 GMT
+Server: Apache
+Content-Length: 143
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+<p>Maksutapahtuman luonti ei onnistunut (-24).</p><p>Error in field/Virhekentässä: MAC</p><p><a href=''>Palaa takaisin verkkokauppaan</a></p>

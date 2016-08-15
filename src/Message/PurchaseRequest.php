@@ -5,8 +5,6 @@
  */
 namespace Omnipay\CheckoutFi\Message;
 
-use Guzzle\Http\Exception\BadResponseException;
-
 /**
  * Purchase request message for Checkout.fi Omnipay driver
  */

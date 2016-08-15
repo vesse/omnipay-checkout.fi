@@ -1,0 +1,11 @@
+HTTP/1.1 302 Found
+Date: Mon, 15 Aug 2016 08:51:50 GMT
+Server: Apache
+Set-Cookie: checkout=0b480dd114ecf10aca2b3b5eee0e7fcf; Domain=checkout.fi; Path=/; Secure; Version=1; httpOnly
+Set-Cookie: checkout2=UtNI1UaKX0; Domain=checkout.fi; Path=/; Secure; Version=1; httpOnly
+Set-Cookie: co2=UtNI1UaKX0; expires=Thu, 08-Dec-2016 22:51:50 GMT; path=/; domain=payment.checkout.fi; secure; httpOnly
+Set-Cookie: co1=0b480dd114ecf10aca2b3b5eee0e7fcf; expires=Thu, 08-Dec-2036 22:51:50 GMT; path=/; domain=payment.checkout.fi; secure; httpOnly
+Location: UtNI1UaKX0/fi/new
+Content-Length: 0
+Connection: close
+Content-Type: text/html; charset=utf-8
