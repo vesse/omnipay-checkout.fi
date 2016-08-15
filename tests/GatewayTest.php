@@ -19,8 +19,9 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
         $this->gateway->initialize(
             array(
-                'merchantId' => CHECKOUT_FI_MERCHANT_ID,
-                'merchantSecret' => CHECKOUT_FI_HASH_KEY
+                'merchantId'     => CHECKOUT_FI_MERCHANT_ID,
+                'merchantSecret' => CHECKOUT_FI_HASH_KEY,
+                'returnUrl'      => 'http://localhost/'
             )
         );
 
