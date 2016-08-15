@@ -42,7 +42,6 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $this->assertEquals('Checkout.fi', $this->gateway->getName());
     }
 
-    // TODO: Set all possible values and validate the values in request with getters
     public function testPurchase()
     {
         $this->setMockHttpResponse('PurchaseSuccess.txt');
