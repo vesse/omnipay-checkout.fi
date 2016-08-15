@@ -37,4 +37,15 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     {
         return null;
     }
+
+    public function getMessage()
+    {
+        $html = $this->data['body'];
+        if (!strpos($html, "Maksutapahtuman luonti ei onnistunut")) {
+            return null;
+        }
+        $strStart = 84;
+        $strLength = strpos($html, '</p><p><a') - $strStart;
+        return "Error in field: " . substr($html, $strStart, $strLength);
+    }
 }
