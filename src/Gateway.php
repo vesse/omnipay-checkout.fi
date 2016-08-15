@@ -40,7 +40,7 @@ class Gateway extends AbstractGateway
 
     public function setPaymentUrl($paymentUrl)
     {
-        $this->setParameter('paymentUrl', $paymentUrl);
+        return $this->setParameter('paymentUrl', $paymentUrl);
     }
 
     public function getMerchantId()
@@ -50,7 +50,7 @@ class Gateway extends AbstractGateway
 
     public function setMerchantId($merchantId)
     {
-        $this->setParameter('merchantId', $merchantId);
+        return $this->setParameter('merchantId', $merchantId);
     }
 
     public function getMerchantSecret()
@@ -60,7 +60,7 @@ class Gateway extends AbstractGateway
 
     public function setMerchantSecret($merchantSecret)
     {
-        $this->setParameter('merchantSecret', $merchantSecret);
+        return $this->setParameter('merchantSecret', $merchantSecret);
     }
 
     public function getReturnUrl()
@@ -70,7 +70,7 @@ class Gateway extends AbstractGateway
 
     public function setReturnUrl($returnUrl)
     {
-        $this->setParameter('returnUrl', $returnUrl);
+        return $this->setParameter('returnUrl', $returnUrl);
     }
 
     public function purchase(array $parameters = array())

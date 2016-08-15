@@ -66,7 +66,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setMessage($message)
     {
-        $this->setParameter('message', $message);
+        return $this->setParameter('message', $message);
     }
 
     public function getLanguage()
@@ -76,7 +76,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setLanguage($language)
     {
-        $this->setParameter('language', $language);
+        return $this->setParameter('language', $language);
     }
 
     public function getCountry()
@@ -86,7 +86,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setCountry($country)
     {
-        $this->setParameter('country', $country);
+        return $this->setParameter('country', $country);
     }
 
     public function getDeliveryDate()
@@ -96,7 +96,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setDeliveryDate($deliveryDate)
     {
-        $this->setParameter('deliveryDate', $deliveryDate);
+        return $this->setParameter('deliveryDate', $deliveryDate);
     }
 
     public function getFirstName()
@@ -106,7 +106,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setFirstName($firstName)
     {
-        $this->setParameter('firstName', $firstName);
+        return $this->setParameter('firstName', $firstName);
     }
 
     public function getFamilyName()
@@ -116,7 +116,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setFamilyName($familyName)
     {
-        $this->setParameter('familyName', $familyName);
+        return $this->setParameter('familyName', $familyName);
     }
 
     public function getAddress()
@@ -126,7 +126,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setAddress($address)
     {
-        $this->setParameter('address', $address);
+        return $this->setParameter('address', $address);
     }
 
     public function getPostcode()
@@ -136,7 +136,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setPostcode($postcode)
     {
-        $this->setParameter('postcode', $postcode);
+        return $this->setParameter('postcode', $postcode);
     }
 
     public function getPostoffice()
@@ -146,7 +146,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setPostoffice($postoffice)
     {
-        $this->setParameter('postoffice', $postoffice);
+        return $this->setParameter('postoffice', $postoffice);
     }
 
     public function getEmail()
@@ -156,7 +156,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function setEmail($email)
     {
-        $this->setParameter('email', $email);
+        return $this->setParameter('email', $email);
     }
 
     public function getPhone()
@@ -166,6 +166,6 @@ class PurchaseRequest extends AbstractRequest
 
     public function setPhone($phone)
     {
-        $this->setParameter('phone', $phone);
+        return $this->setParameter('phone', $phone);
     }
 }
