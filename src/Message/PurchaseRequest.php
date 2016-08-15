@@ -5,6 +5,8 @@
  */
 namespace Omnipay\CheckoutFi\Message;
 
+use Guzzle\Http\Exception\BadResponseException;
+
 /**
  * Purchase request message for Checkout.fi Omnipay driver
  */
@@ -26,7 +28,7 @@ class PurchaseRequest extends AbstractRequest
             'REFERENCE'     => $this->getReference(),
             'MESSAGE'       => $this->getMessage(),
             'LANGUAGE'      => $this->getLanguage(),
-            'MERCHANT'      => $this->getMerchant(),
+            'MERCHANT'      => $this->getMerchantId(),
             'RETURN'        => $this->getReturnUrl(),
             'CANCEL'        => $this->getReturnUrl(),
             'REJECT'        => $this->getReturnUrl(),
@@ -56,7 +58,18 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        return $this->httpClient->request('POST', $this->getPaymentUrl(), ['form_params' => $data]);
+        $this->httpClient->setBaseUrl($this->getPaymentUrl());
+        $request = $this->httpClient->post(null, null, $data);
+
+        try {
+            $httpResponse = $request->send();
+        } catch (BadResponseException $e) {
+            // TODO
+        }
+
+        print_r($httpResponse->getBody(true));
+        // TODO
+        return new PurchaseResponse($this, $httpResponse);
     }
 
     public function getMessage()
