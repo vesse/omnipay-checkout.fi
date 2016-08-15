@@ -55,11 +55,6 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals('1234567893',           $data['REFERENCE']);
         $this->assertEquals('Message',              $data['MESSAGE']);
         $this->assertEquals('FI',                   $data['LANGUAGE']);
-        //$this->assertEquals('375917',               $data['MERCHANT']);
-        //$this->assertEquals('http://localhost/',    $data['RETURN']);
-        //$this->assertEquals('http://localhost/',    $data['CANCEL']);
-        //$this->assertEquals('http://localhost/',    $data['REJECT']);
-        //$this->assertEquals('http://localhost/',    $data['DELAYED']);
         $this->assertEquals('FIN',                  $data['COUNTRY']);
         $this->assertEquals('EUR',                  $data['CURRENCY']);
         $this->assertEquals('1',                    $data['DEVICE']);
@@ -74,5 +69,14 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals('Tampere',              $data['POSTOFFICE']);
         $this->assertEquals('customer@example.com', $data['EMAIL']);
         $this->assertEquals('+358123123123',        $data['PHONE']);
+
+        // These come from the Gateway and are not set if here since the
+        // request is created manually.
+        //$this->assertEquals('375917',               $data['MERCHANT']);
+        //$this->assertEquals('http://localhost/',    $data['RETURN']);
+        //$this->assertEquals('http://localhost/',    $data['CANCEL']);
+        //$this->assertEquals('http://localhost/',    $data['REJECT']);
+        //$this->assertEquals('http://localhost/',    $data['DELAYED']);
+
     }
 }
