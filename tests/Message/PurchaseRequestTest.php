@@ -47,7 +47,16 @@ class PurchaseRequestTest extends TestCase
 
     public function testGetData()
     {
+        $this->request->setMerchantId('123123');
+        $this->request->setReturnUrl('http://localhost/');
+
         $data = $this->request->getData();
+
+        $this->assertEquals('123123',               $data['MERCHANT']);
+        $this->assertEquals('http://localhost/',    $data['RETURN']);
+        $this->assertEquals('http://localhost/',    $data['CANCEL']);
+        $this->assertEquals('http://localhost/',    $data['REJECT']);
+        $this->assertEquals('http://localhost/',    $data['DELAYED']);
 
         $this->assertEquals('0001',                 $data['VERSION']);
         $this->assertEquals('123123123123',         $data['STAMP']);
@@ -69,14 +78,5 @@ class PurchaseRequestTest extends TestCase
         $this->assertEquals('Tampere',              $data['POSTOFFICE']);
         $this->assertEquals('customer@example.com', $data['EMAIL']);
         $this->assertEquals('+358123123123',        $data['PHONE']);
-
-        // These come from the Gateway and are not set if here since the
-        // request is created manually.
-        //$this->assertEquals('375917',               $data['MERCHANT']);
-        //$this->assertEquals('http://localhost/',    $data['RETURN']);
-        //$this->assertEquals('http://localhost/',    $data['CANCEL']);
-        //$this->assertEquals('http://localhost/',    $data['REJECT']);
-        //$this->assertEquals('http://localhost/',    $data['DELAYED']);
-
     }
 }
