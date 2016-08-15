@@ -1,4 +1,5 @@
 language: php
+
 php:
 - 5.3
 - 5.4
@@ -6,9 +7,16 @@ php:
 - 5.6
 - 7.0
 - hhvm
+
+branches:
+  only:
+    - master
+
 before_script:
 - composer install -n --dev --prefer-source
+
 script: composer test
+
 notifications:
-  flowdock:
-    secure: E4zPTH+igZUn1rfyAB9uTZU63RVA/CTLFY9aAlaocihff4qMFcJDgJRUgbWspmJEDhFGqoyrfNFILGt9x9FJnKIzNzR/XJ4dC37eJjDYay33AZSeSe+oGrajo8IUghQrFpU3087p6rmiuczMDnTNPTlLZ0QDRk57G246qSC0d7h9k+MQ0DZQIPlvcCwIw114N9oDIuuoOc/y6D8Li77mKfVyz2Xw5v+Se1XuGzQeGA/cpFNzN1T6wF6d5CMUGVdkWLw1m163yr/3QbRQVaaKb3t2o1JLmAuE5jBqatVzrN7Z7Z9VlBY2fB4A+mXxAUpPWJ7DBtUoLEFl90zHGNFr9UBI2iKMZzfgWYnaUrRLgQLPLq018j6d832sIffFkaLI6sE5gDVqzVl3Im8Pz4wten2lFNynIKc2yB2OD9I9gOGre94qx+2DN75iG0DlR2Ua9cOETuZNGkLGtGbcHrspGAL6GaqtGqtWV8jiAR5Ywg04ONUL5MA0cjNH2QV4TqBHiH1r3e7UscvfZnO0Tq21KOJ3TvgjY2G31tUAM00MV1NMaXSXpje/KOVCjUnVugORmGcynntLSGO4LWR8vWTZLx3et2ayUMSr21T0dokacSA9aJWX2My8GAJjNpX5eV/lsP3RUDSS/rz4MICHm+qjIrUWOxuyfDRMC9gsI4ikyGA=
+  email:
+    - fosters@leon.flowdock.com
