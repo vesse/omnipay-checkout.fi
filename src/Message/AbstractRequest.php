@@ -50,16 +50,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
         $this->setParameter('returnUrl', $returnUrl);
     }
 
-    public function getVersion()
-    {
-        return $this->getParameter('version');
-    }
-
-    public function setVersion($version)
-    {
-        $this->setParameter('version', $version);
-    }
-
     public function getStamp()
     {
         return $this->getParameter('stamp');

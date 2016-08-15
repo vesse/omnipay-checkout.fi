@@ -22,7 +22,7 @@ class PurchaseRequest extends AbstractRequest
     public function getData()
     {
         $data = array(
-            'VERSION'       => $this->getVersion(),
+            'VERSION'       => '0001',
             'STAMP'         => $this->getStamp(),
             'AMOUNT'        => $this->getAmount(),
             'REFERENCE'     => $this->getReference(),
@@ -67,7 +67,7 @@ class PurchaseRequest extends AbstractRequest
             // TODO
         }
 
-        print_r($httpResponse->getBody(true));
+        print_r($httpResponse);
         // TODO
         return new PurchaseResponse($this, $httpResponse);
     }

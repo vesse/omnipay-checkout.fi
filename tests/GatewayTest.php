@@ -49,5 +49,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\CheckoutFi\Message\PurchaseRequest', $request);
 
         $response = $request->send();
+
+        $this->assertRegExp('/\/fi\/new$/', $response->getRedirectUrl());
     }
 }
