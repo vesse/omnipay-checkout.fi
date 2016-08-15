@@ -60,6 +60,7 @@ class PurchaseRequest extends AbstractRequest
     {
         $this->httpClient->setBaseUrl($this->getPaymentUrl());
         $request = $this->httpClient->post(null, null, $data);
+        $request->getParams()->set('redirect.disable', true);
 
         $httpResponse = $request->send();
 
