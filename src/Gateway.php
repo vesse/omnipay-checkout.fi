@@ -16,6 +16,7 @@ use Omnipay\Common\AbstractGateway;
  */
 class Gateway extends AbstractGateway
 {
+    private static $PAYMENT_URL = 'https://payment.checkout.fi/';
 
     public function getName()
     {
@@ -25,7 +26,6 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'paymentUrl' => 'https://payment.checkout.fi',
             'merchantId' => '',
             'merchantSecret' => '',
             'returnUrl' => '',
@@ -33,14 +33,9 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function getPaymentUrl()
+    public static function getPaymentUrl()
     {
-        return $this->getParameter('paymentUrl');
-    }
-
-    public function setPaymentUrl($paymentUrl)
-    {
-        return $this->setParameter('paymentUrl', $paymentUrl);
+        return Gateway::$PAYMENT_URL;
     }
 
     public function getMerchantId()

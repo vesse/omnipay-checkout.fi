@@ -10,16 +10,6 @@ use \Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
-    public function getPaymentUrl()
-    {
-        return $this->getParameter('paymentUrl');
-    }
-
-    public function setPaymentUrl($paymentUrl)
-    {
-        $this->setParameter('paymentUrl', $paymentUrl);
-    }
-
     public function getMerchantId()
     {
         return $this->getParameter('merchantId');

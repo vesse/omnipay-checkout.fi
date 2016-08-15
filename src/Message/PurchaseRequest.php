@@ -5,6 +5,8 @@
  */
 namespace Omnipay\CheckoutFi\Message;
 
+use \Omnipay\CheckoutFi\Gateway;
+
 /**
  * Purchase request message for Checkout.fi Omnipay driver
  */
@@ -56,19 +58,13 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $this->httpClient->setBaseUrl($this->getPaymentUrl());
+        $this->httpClient->setBaseUrl(Gateway::getPaymentUrl());
         $request = $this->httpClient->post(null, null, $data);
         $request->getParams()->set('redirect.disable', true);
 
         $httpResponse = $request->send();
 
-        $data = array(
-            'location'   => $this->buildRedirectUrl($httpResponse->getLocation()),
-            'isRedirect' => $httpResponse->isRedirect(),
-            'body'       => $httpResponse->getBody()
-        );
-
-        return new PurchaseResponse($this, $data);
+        return new PurchaseResponse($this, $httpResponse);
     }
 
     public function getMessage()
@@ -179,10 +175,5 @@ class PurchaseRequest extends AbstractRequest
     public function setPhone($phone)
     {
         return $this->setParameter('phone', $phone);
-    }
-
-    private function buildRedirectUrl($location)
-    {
-        return join('/', array(trim($this->getPaymentUrl(), '/'), trim($location, '/')));
     }
 }

@@ -8,6 +8,7 @@ namespace Omnipay\CheckoutFi\Message;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\RequestInterface;
+use \Omnipay\CheckoutFi\Gateway;
 
 /**
  * Purchase response message from checkout.fi
@@ -17,10 +18,17 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     public function __construct(RequestInterface $request, $data)
     {
         parent::__construct($request, $data);
+
+        $this->data = array(
+            'location'   => $this->buildRedirectUrl($data->getLocation()),
+            'isRedirect' => $data->isRedirect(),
+            'body'       => $data->getBody()
+        );
     }
 
     public function isSuccessful()
     {
+        // RedirectResponse always returns false
         return false;
     }
 
@@ -48,7 +56,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     {
         $html = $this->data['body'];
         $matches = [];
-        $match = preg_match('/kentässä: (.*?)</', $html, $matches) === 1);
+        $match = preg_match('/kentässä: (.*?)</', $html, $matches);
         if ($match === 0) {
             return null;
         }
@@ -56,5 +64,10 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
             return 'Error in field: ' . $matches[1];
         }
         return 'Error in transaction';
+    }
+
+    private function buildRedirectUrl($location)
+    {
+        return join('/', array(trim(Gateway::getPaymentUrl(), '/'), trim($location, '/')));
     }
 }
