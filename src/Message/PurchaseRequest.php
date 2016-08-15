@@ -61,14 +61,8 @@ class PurchaseRequest extends AbstractRequest
         $this->httpClient->setBaseUrl($this->getPaymentUrl());
         $request = $this->httpClient->post(null, null, $data);
 
-        try {
-            $httpResponse = $request->send();
-        } catch (BadResponseException $e) {
-            // TODO
-        }
+        $httpResponse = $request->send();
 
-        print_r($httpResponse);
-        // TODO
         return new PurchaseResponse($this, $httpResponse);
     }
 
