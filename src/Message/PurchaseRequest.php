@@ -64,7 +64,13 @@ class PurchaseRequest extends AbstractRequest
 
         $httpResponse = $request->send();
 
-        return new PurchaseResponse($this, $httpResponse);
+        $data = array(
+            'location'   => $this->buildRedirectUrl($httpResponse->getLocation()),
+            'isRedirect' => $httpResponse->isRedirect(),
+            'body'       => $httpResponse->getBody()
+        );
+
+        return new PurchaseResponse($this, $data);
     }
 
     public function getMessage()
@@ -175,5 +181,10 @@ class PurchaseRequest extends AbstractRequest
     public function setPhone($phone)
     {
         return $this->setParameter('phone', $phone);
+    }
+
+    private function buildRedirectUrl($location)
+    {
+        return join('/', array(trim($this->getPaymentUrl(), '/'), trim($location, '/')));
     }
 }

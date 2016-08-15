@@ -50,6 +50,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
         $response = $request->send();
 
-        $this->assertRegExp('/\/fi\/new$/', $response->getRedirectUrl());
+        $this->assertTrue($response->isRedirect());
+        $this->assertRegExp('/https:\/\/payment\.checkout\.fi\/\w+\/fi\/new$/', $response->getRedirectUrl());
     }
 }
