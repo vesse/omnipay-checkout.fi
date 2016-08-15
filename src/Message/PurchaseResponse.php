@@ -47,11 +47,14 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     public function getMessage()
     {
         $html = $this->data['body'];
-        if (!strpos($html, "Maksutapahtuman luonti ei onnistunut")) {
+        $matches = [];
+        $match = preg_match('/kentässä: (.*?)</', $html, $matches) === 1);
+        if ($match === 0) {
             return null;
         }
-        $strStart = 84;
-        $strLength = strpos($html, '</p><p><a') - $strStart;
-        return "Error in field: " . substr($html, $strStart, $strLength);
+        if ($match === 1) {
+            return 'Error in field: ' . $matches[1];
+        }
+        return 'Error in transaction';
     }
 }
