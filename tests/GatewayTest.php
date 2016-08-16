@@ -36,6 +36,16 @@ class CheckoutFiGatewayTest extends GatewayTestCase
             'POSTCODE'      => '33100',
             'POSTOFFICE'    => 'Tampere'
         );
+
+        $this->returnParameters = array(
+            'VERSION'  => '0001',
+            'STAMP'    => '1471325999',
+            'REFERENCE'=> '12345678901234567894',
+            'PAYMENT'  => '42262586',
+            'STATUS'   => '2',
+            'ALGORITHM'=> '3',
+            'MAC'      => '10C61ED4776D7A73D58B629D4EB4B91667C18E3B74A52EE06C1D0F19B6624C86'
+        );
     }
 
     public function testGetName()
@@ -73,5 +83,34 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNotNull($response->getMessage());
+    }
+
+    public function testValidateReturnMac()
+    {
+        $this->assertTrue($this->gateway->validateResponseMac($this->returnParameters));
+    }
+
+    public function testValidateReturnMacTampered()
+    {
+        $this->returnParameters['MAC'] = '123';
+        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
+    }
+
+    public function testValidateReturnMacValueChanged()
+    {
+        $this->returnParameters['STATUS'] = '0';
+        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
+    }
+
+    public function testValidateReturnMacFieldsMissing()
+    {
+        unset($this->returnParameters['STATUS']);
+        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
+    }
+
+    public function testValidateReturnMacMissing()
+    {
+        unset($this->returnParameters['MAC']);
+        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
     }
 }

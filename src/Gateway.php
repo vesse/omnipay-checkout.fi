@@ -18,6 +18,10 @@ class Gateway extends AbstractGateway
 {
     private static $PAYMENT_URL = 'https://payment.checkout.fi/';
 
+    private static $RESPONSE_MAC_FIELDS = array(
+        'VERSION', 'STAMP', 'REFERENCE', 'PAYMENT', 'STATUS', 'ALGORITHM'
+    );
+
     public function getName()
     {
         return 'Checkout.fi';
@@ -71,5 +75,46 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\CheckoutFi\Message\PurchaseRequest', $parameters);
+    }
+
+    /**
+     * Validate the MAC field from purchase response
+     */
+    public function validateResponseMac(array $parameters = array())
+    {
+        if (!self::allRequiredKeysExist($parameters)) {
+            return false;
+        }
+
+        // Only SHA-256 supported
+        if ($parameters['ALGORITHM'] !== '3' && $parameters['ALGORITHM'] !== 3) {
+            return false;
+        }
+
+        $hashString = join(
+            '&',
+            array_map(function ($field) use (&$parameters) {
+                return $parameters[$field];
+            }, self::$RESPONSE_MAC_FIELDS)
+        );
+
+        $calculatedMac = strtoupper(hash_hmac('sha256', $hashString, $this->getMerchantSecret()));
+
+        return $parameters['MAC'] === $calculatedMac;
+    }
+
+    private static function allRequiredKeysExist(array $parameters)
+    {
+        if (!array_key_exists('MAC', $parameters)) {
+            return false;
+        }
+
+        foreach (self::$RESPONSE_MAC_FIELDS as $field) {
+            if (!array_key_exists($field, $parameters)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

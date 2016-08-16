@@ -10,6 +10,8 @@ The following gateways are provided by this package:
 
 * CheckoutFi
 
+For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay) repository.
+
 ## Example
 
 ```php
@@ -46,7 +48,19 @@ if ($response->isRedirect()) {
 }
 ```
 
-See the [API documentation](http://www.checkout.fi/materiaalit/tekninen-materiaali/) (in Finnish) for the request parameters. Values for `VERSION`, `CURRENCY`, `DEVICE`, `CONTENT`, `TYPE`, and `ALGORITHM` are fixed already.
+See the [checkout.fi API documentation](http://www.checkout.fi/materiaalit/tekninen-materiaali/) (in Finnish) for the request parameters. Values for `VERSION`, `CURRENCY`, `DEVICE`, `CONTENT`, `TYPE`, and `ALGORITHM` are set already, although you may need to provide another value for `CONTENT`.
+
+Once the purchase is completed or cancelled, checkout.fi will call you `returnUrl` with parameters defined in the API documentation. The gateway instance provides a method for validating the MAC field of the response:
+
+```php
+$gateway->validateResponseMac($queryStringParameters);
+```
+
+## Support
+
+If you are having general issues with Omnipay, we suggest posting on [Stack Overflow](http://stackoverflow.com/). Be sure to add the [omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
+
+If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/vesse/omnipay-checkout.fi/issues), or better yet, fork the library and submit a pull request.
 
 ## Development
 

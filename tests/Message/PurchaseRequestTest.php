@@ -15,9 +15,11 @@ class PurchaseRequestTest extends TestCase
     {
         parent::setUp();
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        // The keys with value 'xxxx' are hard-coded in the implementation
+        // and value given here should not overwrite the value set in the request
         $this->request->initialize(
             array(
-                'VERSION'       => '0001',
+                'VERSION'       => 'xxxx',
                 'STAMP'         => '123123123123',
                 'AMOUNT'        => '1200',
                 'REFERENCE'     => '1234567893',
@@ -28,11 +30,11 @@ class PurchaseRequestTest extends TestCase
                 'REJECT'        => 'http://localhost/',
                 'DELAYED'       => 'http://localhost/',
                 'COUNTRY'       => 'FIN',
-                'CURRENCY'      => 'EUR',
-                'DEVICE'        => '1',
+                'CURRENCY'      => 'xxxx',
+                'DEVICE'        => 'xxxx',
                 'CONTENT'       => '1',
-                'TYPE'          => '0',
-                'ALGORITHM'     => '3',
+                'TYPE'          => 'xxxx',
+                'ALGORITHM'     => 'xxxx',
                 'DELIVERY_DATE' => '20160815',
                 'FIRSTNAME'     => 'Paying',
                 'FAMILYNAME'    => 'Customer',

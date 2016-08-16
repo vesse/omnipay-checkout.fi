@@ -36,7 +36,7 @@ class PurchaseRequest extends AbstractRequest
             'COUNTRY'       => $this->getCountry(),
             'CURRENCY'      => 'EUR',
             'DEVICE'        => '1',
-            'CONTENT'       => '1',
+            'CONTENT'       => $this->getContent(),
             'TYPE'          => '0',
             'ALGORITHM'     => '3',
             'DELIVERY_DATE' => $this->getDeliveryDate(),
@@ -95,6 +95,16 @@ class PurchaseRequest extends AbstractRequest
     public function setCountry($country)
     {
         return $this->setParameter('country', $country);
+    }
+
+    public function getContent()
+    {
+        return $this->getParameter('content') || '1';
+    }
+
+    public function setContent($content)
+    {
+        return $this->setParameter('content', $content);
     }
 
     public function getDeliveryDate()
