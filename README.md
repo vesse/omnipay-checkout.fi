@@ -33,15 +33,15 @@ $gateway.initialize(
 
 $response = $gateway->purchase(
     array(
-        'STAMP' => 'YourUniqueIdentifier',
-        'AMOUNT' => '1200', // Amount in cents
-        'REFERENCE' => 'YourReference',
-        'DELIVERY_DATE' => '20160815', // Estimated delivery date
-        'FIRSTNAME' => 'Paying',
-        'FAMILYNAME' => 'Customer',
-        'ADDRESS' => 'Streetaddress 123',
-        'POSTCODE' => '33100',
-        'POSTOFFICE' => 'Tampere'
+        'stamp' => 'YourUniqueIdentifier',
+        'amount' => '1200', // Amount in cents
+        'reference' => 'YourReference',
+        'deliveryDate' => '20160815', // Estimated delivery date
+        'firstName' => 'Paying',
+        'familyName' => 'Customer',
+        'address' => 'Streetaddress 123',
+        'postCode' => '33100',
+        'postOffice' => 'Tampere'
     )
 )->send();
 
