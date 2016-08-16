@@ -55,7 +55,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     public function getMessage()
     {
         $html = $this->data['body'];
-        $matches = [];
+        $matches = array();
         $match = preg_match('/kentässä: (.*?)</', $html, $matches);
         if ($match === 0) {
             return null;
