@@ -85,32 +85,12 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $this->assertNotNull($response->getMessage());
     }
 
-    public function testValidateReturnMac()
+    public function testCompletePurchase()
     {
-        $this->assertTrue($this->gateway->validateResponseMac($this->returnParameters));
-    }
+        $request = $this->gateway->completePurchase($this->returnParameters);
+        $response = $request->sendData($this->returnParameters);
 
-    public function testValidateReturnMacTampered()
-    {
-        $this->returnParameters['MAC'] = '123';
-        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
-    }
-
-    public function testValidateReturnMacValueChanged()
-    {
-        $this->returnParameters['STATUS'] = '0';
-        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
-    }
-
-    public function testValidateReturnMacFieldsMissing()
-    {
-        unset($this->returnParameters['STATUS']);
-        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
-    }
-
-    public function testValidateReturnMacMissing()
-    {
-        unset($this->returnParameters['MAC']);
-        $this->assertFalse($this->gateway->validateResponseMac($this->returnParameters));
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals($response->getTransactionReference(), $this->returnParameters['PAYMENT']);
     }
 }

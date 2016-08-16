@@ -64,7 +64,7 @@ class PurchaseRequest extends AbstractRequest
 
         $httpResponse = $request->send();
 
-        return new PurchaseResponse($this, $httpResponse);
+        return $this->response = new PurchaseResponse($this, $httpResponse);
     }
 
     public function getMessage()
