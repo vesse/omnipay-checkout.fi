@@ -1,10 +1,14 @@
 # omnipay-checkout.fi
 
-Omnipay driver for [Checkout.fi](http://www.checkout.fi/).
+**[Checkout.fi](http://www.checkout.fi/) driver for the Omnipay PHP payment processing library**
 
-The driver redirects the user to checkout.fi website for the payment, and once complete checkout.fi calls the provided `returnUrl`.
+[![Build Status](https://travis-ci.org/vesse/omnipay-checkout.fi.png?branch=master)](https://travis-ci.org/vesse/omnipay-checkout.fi)
+
+Omnipay is a framework agnostic, multi-gateway payment processing library for PHP 5.3+. This package implements Checkout.fi support for Omnipay.
 
 ## Installation
+
+**TODO**
 
 ## Basic Usage
 
