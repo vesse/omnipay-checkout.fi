@@ -1,6 +1,8 @@
 # omnipay-checkout.fi
 
-Omnipay driver for Checkout.fi. The driver redirects the user to checkout.fi website for the actual payment, and once complete checkout.fi calls the provided `returnUrl`.
+Omnipay driver for [Checkout.fi](http://www.checkout.fi/).
+
+The driver redirects the user to checkout.fi website for the payment, and once complete checkout.fi calls the provided `returnUrl`.
 
 ## Installation
 
