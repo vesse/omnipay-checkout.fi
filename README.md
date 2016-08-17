@@ -56,10 +56,17 @@ if ($response->isRedirect()) {
 
 See the [checkout.fi API documentation](http://www.checkout.fi/materiaalit/tekninen-materiaali/) (in Finnish) for the request parameters. Values for `VERSION`, `CURRENCY`, `DEVICE`, `CONTENT`, `TYPE`, and `ALGORITHM` are set already, although you may need to provide another value for `CONTENT`.
 
-Once the purchase is completed or cancelled, checkout.fi will call you `returnUrl` with parameters defined in the API documentation. The gateway instance provides a method for validating the MAC field of the response:
+Once the purchase is completed or cancelled, checkout.fi will call you `returnUrl` with parameters defined in the API documentation. This you should handle with `completePurchase`, eg.
 
 ```php
-$gateway->validateResponseMac($queryStringParameters);
+// CompletePurchaseRequest will read the parameters from query string
+$response = $gateway->completePurchase()->send();
+
+if ($response->isSuccessful()) {
+    // TODO
+} else {
+    // TODO
+}
 ```
 
 ## Support
