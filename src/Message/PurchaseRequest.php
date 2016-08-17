@@ -21,6 +21,8 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
+        $this->validate('stamp', 'amount', 'reference', 'deliveryDate');
+
         $data = array(
             'VERSION'       => '0001',
             'STAMP'         => $this->getStamp(),
