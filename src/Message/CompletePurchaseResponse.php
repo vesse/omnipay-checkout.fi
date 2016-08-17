@@ -20,6 +20,6 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function getTransactionReference()
     {
-        return isset($this->data['PAYMENT']) ? $this->data['PAYMENT'] : null;
+        return isset($this->data['STAMP']) ? $this->data['STAMP'] : null;
     }
 }

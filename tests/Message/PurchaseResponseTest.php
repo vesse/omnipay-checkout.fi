@@ -5,16 +5,34 @@
  */
 namespace Omnipay\CheckoutFi\Message;
 
-use Omnipay\Tests\TestCase;
+use Omnipay\Tests\GatewayTestCase;
+use Omnipay\CheckoutFi\Gateway;
 
-class PurchaseResponseTest extends TestCase
+class PurchaseResponseTest extends GatewayTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+
+        $this->options = array(
+            'STAMP'         => time(),
+            'AMOUNT'        => '1200',
+            'REFERENCE'     => '123456793',
+            'DELIVERY_DATE' => '20160910',
+            'FIRSTNAME'     => 'Paying',
+            'FAMILYNAME'    => 'Customer',
+            'ADDRESS'       => 'Street address 114',
+            'POSTCODE'      => '33100',
+            'POSTOFFICE'    => 'Tampere'
+        );
+    }
+
     public function testPurchaseSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('PurchaseSuccess.txt');
-        $request = $this->getMockRequest();
-        $request->shouldReceive('getTestMode')->once()->andReturn(true);
-        $response = new PurchaseResponse($request, $httpResponse);
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
+
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
@@ -24,10 +42,9 @@ class PurchaseResponseTest extends TestCase
 
     public function testPurchaseFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('PurchaseFailure.txt');
-        $request = $this->getMockRequest();
-        $request->shouldReceive('getTestMode')->once()->andReturn(true);
-        $response = new PurchaseResponse($request, $httpResponse);
+        $this->setMockHttpResponse('PurchaseFailure.txt');
+
+        $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());

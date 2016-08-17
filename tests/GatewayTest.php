@@ -91,6 +91,6 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $response = $request->sendData($this->returnParameters);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals($response->getTransactionReference(), $this->returnParameters['PAYMENT']);
+        $this->assertEquals($response->getTransactionReference(), $this->returnParameters['STAMP']);
     }
 }
