@@ -12,49 +12,40 @@ use \Omnipay\CheckoutFi\Gateway;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    private static $MAC_FIELDS = array(
-        'VERSION', 'STAMP', 'AMOUNT', 'REFERENCE', 'MESSAGE',
-        'LANGUAGE', 'MERCHANT', 'RETURN', 'CANCEL', 'REJECT',
-        'DELAYED', 'COUNTRY', 'CURRENCY', 'DEVICE', 'CONTENT',
-        'TYPE', 'ALGORITHM', 'DELIVERY_DATE', 'FIRSTNAME', 'FAMILYNAME',
-        'ADDRESS', 'POSTCODE', 'POSTOFFICE');
-
     public function getData()
     {
         $this->validate('stamp', 'amount', 'reference', 'deliveryDate');
 
         $data = array(
             'VERSION'       => '0001',
-            'STAMP'         => $this->getStamp(),
-            'AMOUNT'        => $this->getAmount(),
-            'REFERENCE'     => $this->getReference(),
-            'MESSAGE'       => $this->getMessage(),
-            'LANGUAGE'      => $this->getLanguage(),
-            'MERCHANT'      => $this->getMerchantId(),
-            'RETURN'        => $this->getReturnUrl(),
-            'CANCEL'        => $this->getReturnUrl(),
-            'REJECT'        => $this->getReturnUrl(),
-            'DELAYED'       => $this->getReturnUrl(),
-            'COUNTRY'       => $this->getCountry(),
+            'STAMP'         => $this->ensureLength($this->getStamp(), 20),
+            'AMOUNT'        => $this->ensureLength($this->getAmount(), 8),
+            'REFERENCE'     => $this->ensureLength($this->getReference(), 20),
+            'MESSAGE'       => $this->ensureLength($this->getMessage(), 1000),
+            'LANGUAGE'      => $this->ensureLength($this->getLanguage(), 2),
+            'MERCHANT'      => $this->ensureLength($this->getMerchantId(), 20),
+            'RETURN'        => $this->ensureLength($this->getReturnUrl(), 300),
+            'CANCEL'        => $this->ensureLength($this->getReturnUrl(), 300),
+            'REJECT'        => $this->ensureLength($this->getReturnUrl(), 300),
+            'DELAYED'       => $this->ensureLength($this->getReturnUrl(), 300),
+            'COUNTRY'       => $this->ensureLength($this->getCountry(), 3),
             'CURRENCY'      => 'EUR',
             'DEVICE'        => '1',
-            'CONTENT'       => $this->getContent(),
+            'CONTENT'       => $this->ensureLength($this->getContent(), 2),
             'TYPE'          => '0',
             'ALGORITHM'     => '3',
-            'DELIVERY_DATE' => $this->getDeliveryDate(),
-            'FIRSTNAME'     => $this->getFirstName(),
-            'FAMILYNAME'    => $this->getFamilyName(),
-            'ADDRESS'       => $this->getAddress(),
-            'POSTCODE'      => $this->getPostcode(),
-            'POSTOFFICE'    => $this->getPostoffice(),
-            'EMAIL'         => $this->getEmail(),
-            'PHONE'         => $this->getPhone()
+            'DELIVERY_DATE' => $this->ensureLength($this->getDeliveryDate(), 8),
+            'FIRSTNAME'     => $this->ensureLength($this->getFirstName(), 40),
+            'FAMILYNAME'    => $this->ensureLength($this->getFamilyName(), 40),
+            'ADDRESS'       => $this->ensureLength($this->getAddress(), 40),
+            'POSTCODE'      => $this->ensureLength($this->getPostcode(), 14),
+            'POSTOFFICE'    => $this->ensureLength($this->getPostoffice(), 18),
         );
 
-        $hashString = join('+', array_map(function ($field) use (&$data) {
-            return $data[$field];
-        }, self::$MAC_FIELDS)) . '+' . $this->getMerchantSecret();
+        $hashString  = join('+', $data) . '+' . $this->getMerchantSecret();
         $data['MAC'] = strtoupper(md5($hashString));
+        $data['EMAIL'] = $this->ensureLength($this->getEmail(), 200);
+        $data['PHONE'] = $this->ensureLength($this->getPhone(), 30);
         return $data;
     }
 
@@ -200,5 +191,16 @@ class PurchaseRequest extends AbstractRequest
     private function buildRedirectUrl($location)
     {
         return join('/', array(trim(Gateway::getPaymentUrl(), '/'), trim($location, '/')));
+    }
+
+    private function ensureLength($parameter, $length)
+    {
+        if (is_null($parameter)) {
+            return NULL;
+        }
+        if (is_numeric($parameter)) {
+            return (int) mb_substr($parameter, 0, $length);
+        }
+        return mb_substr($parameter, 0, $length);
     }
 }
