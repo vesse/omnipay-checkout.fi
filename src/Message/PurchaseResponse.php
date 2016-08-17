@@ -45,6 +45,11 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
         return $this->data['stamp'];
     }
 
+    public function getStatusCode()
+    {
+        return $this->data['statusCode'];
+    }
+
     public function getMessage()
     {
         $html = $this->data['body'];

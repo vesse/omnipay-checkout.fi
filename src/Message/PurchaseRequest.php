@@ -70,7 +70,8 @@ class PurchaseRequest extends AbstractRequest
             'location'   => $this->buildRedirectUrl($httpResponse->getLocation()),
             'isRedirect' => $httpResponse->isRedirect(),
             'body'       => $httpResponse->getBody(true),
-            'stamp'      => $data['STAMP']
+            'stamp'      => $data['STAMP'],
+            'statusCode' => $httpResponse->getStatusCode()
         );
 
         return $this->response = new PurchaseResponse($this, $responseData);

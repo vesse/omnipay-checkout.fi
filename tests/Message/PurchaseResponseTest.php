@@ -38,6 +38,7 @@ class PurchaseResponseTest extends GatewayTestCase
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://payment.checkout.fi/UtNI1UaKX0/fi/new', $response->getRedirectUrl());
         $this->assertNull($response->getMessage());
+        $this->assertEquals(302, $response->getStatusCode());
     }
 
     public function testPurchaseFailure()
@@ -50,5 +51,6 @@ class PurchaseResponseTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNotNull($response->getMessage());
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }
