@@ -14,12 +14,22 @@ class CompletePurchaseResponse extends AbstractResponse
 {
     public function isSuccessful()
     {
-        return isset($this->data['STATUS']) &&
+        return array_key_exists('STATUS', $this->data) &&
             ($this->data['STATUS'] === '2' || $this->data['STATUS'] === 2);
     }
 
     public function getTransactionReference()
     {
-        return isset($this->data['STAMP']) ? $this->data['STAMP'] : null;
+        return $this->getField('STAMP');
+    }
+
+    public function getPaymentStatus()
+    {
+        return $this->getField('STATUS');
+    }
+
+    private function getField($field)
+    {
+        return array_key_exists($field, $this->data) ? $this->data[$field] : null;
     }
 }
