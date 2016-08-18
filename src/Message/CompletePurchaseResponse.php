@@ -13,13 +13,19 @@ use Omnipay\Common\Message\AbstractResponse;
  */
 class CompletePurchaseResponse extends AbstractResponse
 {
+    private static $SUCCESS_STATUSES = array('2', '4', '5', '6', '7', '8', '9', '10');
+
     /**
      * {@inheritDoc}
      */
     public function isSuccessful()
     {
-        return array_key_exists('STATUS', $this->data) &&
-            ($this->data['STATUS'] === '2' || $this->data['STATUS'] === 2);
+        if (!array_key_exists('STATUS', $this->data)) {
+            return false;
+        }
+
+        $status = (string) $this->data['STATUS'];
+        return in_array($status, self::$SUCCESS_STATUSES, true);
     }
 
     /**
