@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2016 12:25:46 GMT
+Server: Apache
+Content-Length: 146
+Connection: close
+Content-Type: text/html; charset: utf-8; charset=UTF-8
+
+<?xml version="1.0"?>
+<checkout><response><statusMessage>REFUND AMOUNT TOO BIG</statusMessage><statusCode>2202</statusCode></response></checkout>

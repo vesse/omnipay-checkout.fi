@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2016 12:27:16 GMT
+Server: Apache
+Content-Length: 158
+Connection: close
+Content-Type: text/html; charset: utf-8; charset=UTF-8
+
+<?xml version="1.0"?>
+<checkout><response><stamp>1471523235</stamp><statusMessage>REFUNDED</statusMessage><statusCode>2100</statusCode></response></checkout>

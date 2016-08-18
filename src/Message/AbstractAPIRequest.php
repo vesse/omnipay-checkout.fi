@@ -71,4 +71,40 @@ abstract class AbstractAPIRequest extends AbstractRequest
     {
         $this->setParameter('reference', $reference);
     }
+
+    /**
+     * Get the to customer email address
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->getParameter('email');
+    }
+
+    /**
+     * Set the customer email address
+     *
+     * @param string
+     */
+    public function setEmail($email)
+    {
+        return $this->setParameter('email', $email);
+    }
+
+    /**
+     * Truncate the given string to given length unless without converting null values to empty strings
+     *
+     * @param string $parameter The parameter to truncate
+     * @param int $length The maximum length of the string
+     * @return string
+     */
+    protected static function ensureLength($parameter, $length)
+    {
+        if (is_null($parameter)) {
+            return null;
+        }
+
+        return mb_substr($parameter, 0, $length);
+    }
 }

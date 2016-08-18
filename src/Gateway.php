@@ -17,6 +17,8 @@ class Gateway extends AbstractGateway
 {
     private static $PAYMENT_URL = 'https://payment.checkout.fi/';
 
+    private static $REFUND_URL = 'https://rpcapi.checkout.fi/refund2';
+
     /**
      * {@inheritDoc}
      */
@@ -46,6 +48,16 @@ class Gateway extends AbstractGateway
     public static function getPaymentUrl()
     {
         return Gateway::$PAYMENT_URL;
+    }
+
+    /**
+     * Get the refund endpoint URL
+     *
+     * @return string
+     */
+    public static function getRefundUrl()
+    {
+        return Gateway::$REFUND_URL;
     }
 
     /**
@@ -122,5 +134,13 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\CheckoutFi\Message\CompletePurchaseRequest', $parameters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function refund(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\CheckoutFi\Message\RefundRequest', $parameters);
     }
 }

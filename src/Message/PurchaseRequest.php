@@ -302,26 +302,6 @@ class PurchaseRequest extends AbstractAPIRequest
     }
 
     /**
-     * Get the to customer email address
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->getParameter('email');
-    }
-
-    /**
-     * Set the customer email address
-     *
-     * @param string
-     */
-    public function setEmail($email)
-    {
-        return $this->setParameter('email', $email);
-    }
-
-    /**
      * Get the to customer phone number
      *
      * @return string
@@ -350,21 +330,5 @@ class PurchaseRequest extends AbstractAPIRequest
     private static function buildRedirectUrl($location)
     {
         return join('/', array(trim(Gateway::getPaymentUrl(), '/'), trim($location, '/')));
-    }
-
-    /**
-     * Truncate the given string to given length unless without converting null values to empty strings
-     *
-     * @param string $parameter The parameter to truncate
-     * @param int $length The maximum length of the string
-     * @return string
-     */
-    private static function ensureLength($parameter, $length)
-    {
-        if (is_null($parameter)) {
-            return null;
-        }
-
-        return mb_substr($parameter, 0, $length);
     }
 }

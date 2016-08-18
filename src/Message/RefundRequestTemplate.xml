@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<checkout>
+    <identification>
+        <merchant></merchant>
+        <stamp></stamp>
+    </identification>
+    <message>
+        <refund>
+            <stamp></stamp>
+            <reference></reference>
+            <amount></amount>
+            <receiver>
+                <email></email>
+            </receiver>
+        </refund>
+    </message>
+</checkout>
