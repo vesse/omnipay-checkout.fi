@@ -80,5 +80,7 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('Tampere',              $data['POSTOFFICE']);
         $this->assertSame('customer@example.com', $data['EMAIL']);
         $this->assertSame('+358123123123',        $data['PHONE']);
+
+        $this->assertSame('F93C1D28E78737147CCE9A0DF0EFDBEB', $data['MAC']);
     }
 }
