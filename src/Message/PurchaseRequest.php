@@ -196,11 +196,9 @@ class PurchaseRequest extends AbstractRequest
     private function ensureLength($parameter, $length)
     {
         if (is_null($parameter)) {
-            return NULL;
+            return null;
         }
-        if (is_numeric($parameter)) {
-            return (int) mb_substr($parameter, 0, $length);
-        }
+
         return mb_substr($parameter, 0, $length);
     }
 }

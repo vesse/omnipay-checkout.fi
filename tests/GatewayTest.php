@@ -50,7 +50,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
     public function testGetName()
     {
-        $this->assertEquals('Checkout.fi', $this->gateway->getName());
+        $this->assertSame('Checkout.fi', $this->gateway->getName());
     }
 
     public function testPurchase()
@@ -65,7 +65,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('Omnipay\CheckoutFi\Message\PurchaseResponse', $response);
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('https://payment.checkout.fi/UtNI1UaKX0/fi/new', $response->getRedirectUrl());
+        $this->assertSame('https://payment.checkout.fi/UtNI1UaKX0/fi/new', $response->getRedirectUrl());
         $this->assertNull($response->getMessage());
     }
 
@@ -91,6 +91,6 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $response = $request->sendData($this->returnParameters);
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals($response->getTransactionReference(), $this->returnParameters['STAMP']);
+        $this->assertSame($response->getTransactionReference(), $this->returnParameters['STAMP']);
     }
 }

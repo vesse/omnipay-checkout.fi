@@ -22,7 +22,7 @@ class PurchaseRequestTest extends TestCase
                 'version'       => 'xxxx',
                 'stamp'         => '123123123123',
                 'amount'        => '1200',
-                'reference'     => '1234567893',
+                'reference'     => '0001234567893',
                 'message'       => 'Message',
                 'language'      => 'FI',
                 'return'        => 'http://localhost/',
@@ -54,31 +54,31 @@ class PurchaseRequestTest extends TestCase
 
         $data = $this->request->getData();
 
-        $this->assertEquals('123123',               $data['MERCHANT']);
-        $this->assertEquals('http://localhost/',    $data['RETURN']);
-        $this->assertEquals('http://localhost/',    $data['CANCEL']);
-        $this->assertEquals('http://localhost/',    $data['REJECT']);
-        $this->assertEquals('http://localhost/',    $data['DELAYED']);
+        $this->assertSame('123123',               $data['MERCHANT']);
+        $this->assertSame('http://localhost/',    $data['RETURN']);
+        $this->assertSame('http://localhost/',    $data['CANCEL']);
+        $this->assertSame('http://localhost/',    $data['REJECT']);
+        $this->assertSame('http://localhost/',    $data['DELAYED']);
 
-        $this->assertEquals('0001',                 $data['VERSION']);
-        $this->assertEquals('123123123123',         $data['STAMP']);
-        $this->assertEquals('1200',                 $data['AMOUNT']);
-        $this->assertEquals('1234567893',           $data['REFERENCE']);
-        $this->assertEquals('Message',              $data['MESSAGE']);
-        $this->assertEquals('FI',                   $data['LANGUAGE']);
-        $this->assertEquals('FIN',                  $data['COUNTRY']);
-        $this->assertEquals('EUR',                  $data['CURRENCY']);
-        $this->assertEquals('1',                    $data['DEVICE']);
-        $this->assertEquals('1',                    $data['CONTENT']);
-        $this->assertEquals('0',                    $data['TYPE']);
-        $this->assertEquals('3',                    $data['ALGORITHM']);
-        $this->assertEquals('20160815',             $data['DELIVERY_DATE']);
-        $this->assertEquals('Paying',               $data['FIRSTNAME']);
-        $this->assertEquals('Customer',             $data['FAMILYNAME']);
-        $this->assertEquals('Streetaddress 123',    $data['ADDRESS']);
-        $this->assertEquals('33100',                $data['POSTCODE']);
-        $this->assertEquals('Tampere',              $data['POSTOFFICE']);
-        $this->assertEquals('customer@example.com', $data['EMAIL']);
-        $this->assertEquals('+358123123123',        $data['PHONE']);
+        $this->assertSame('0001',                 $data['VERSION']);
+        $this->assertSame('123123123123',         $data['STAMP']);
+        $this->assertSame('1200',                 $data['AMOUNT']);
+        $this->assertSame('0001234567893',        $data['REFERENCE']);
+        $this->assertSame('Message',              $data['MESSAGE']);
+        $this->assertSame('FI',                   $data['LANGUAGE']);
+        $this->assertSame('FIN',                  $data['COUNTRY']);
+        $this->assertSame('EUR',                  $data['CURRENCY']);
+        $this->assertSame('1',                    $data['DEVICE']);
+        $this->assertSame('1',                    $data['CONTENT']);
+        $this->assertSame('0',                    $data['TYPE']);
+        $this->assertSame('3',                    $data['ALGORITHM']);
+        $this->assertSame('20160815',             $data['DELIVERY_DATE']);
+        $this->assertSame('Paying',               $data['FIRSTNAME']);
+        $this->assertSame('Customer',             $data['FAMILYNAME']);
+        $this->assertSame('Streetaddress 123',    $data['ADDRESS']);
+        $this->assertSame('33100',                $data['POSTCODE']);
+        $this->assertSame('Tampere',              $data['POSTOFFICE']);
+        $this->assertSame('customer@example.com', $data['EMAIL']);
+        $this->assertSame('+358123123123',        $data['PHONE']);
     }
 }
