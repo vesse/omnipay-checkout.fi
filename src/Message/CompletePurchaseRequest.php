@@ -6,6 +6,10 @@
  */
 namespace Omnipay\CheckoutFi\Message;
 
+use Omnipay\CheckoutFi\Message\Exceptions\UnsupportedAlgorithmException;
+use Omnipay\CheckoutFi\Message\Exceptions\RequiredFieldMissingException;
+use Omnipay\CheckoutFi\Message\Exceptions\ChecksumMismatchException;
+
 /**
  * Purchase complete message for Checkout.fi Omnipay driver. While this is a request
  * it is not sent to the checkout.fi API. Instead it validates the request that came
@@ -33,12 +37,14 @@ class CompletePurchaseRequest extends AbstractRequest
 
     /**
      * {@inheritDoc}
+     *
+     * @throws UnsupportedAlgorithmException when provided hash algorithm is not supported
+     * @throws RequiredFieldMissingException when required field is missing
+     * @throws ChecksumMismatchException when MAC value does not match the calculated value
      */
     public function sendData($data)
     {
-        if (!$this->validateResponseMac($data)) {
-            throw new \Exception("Invalid response, either fields tampered or MAC invalid.");
-        }
+        $this->validateResponseMac($data);
 
         return $this->response = new CompletePurchaseResponse($this, $data);
     }
@@ -46,20 +52,19 @@ class CompletePurchaseRequest extends AbstractRequest
     /**
      * Validate the MAC field from purchase response
      *
-     * @todo Use exceptions
-     *
      * @param array $parameters Request parameters
-     * @return boolean
+     *
+     * @throws UnsupportedAlgorithmException when provided hash algorithm is not supported
+     * @throws RequiredFieldMissingException when required field is missing
+     * @throws ChecksumMismatchException when MAC value does not match the calculated value
      */
     private function validateResponseMac(array $parameters = array())
     {
-        if (!self::allRequiredKeysExist($parameters)) {
-            return false;
-        }
+        self::validateRequiredKeys($parameters);
 
         // Only SHA-256 supported
         if ($parameters['ALGORITHM'] !== '3' && $parameters['ALGORITHM'] !== 3) {
-            return false;
+            throw new UnsupportedAlgorithmException('Only algorithm 3 is supported');
         }
 
         $hashString = join(
@@ -71,27 +76,29 @@ class CompletePurchaseRequest extends AbstractRequest
 
         $calculatedMac = strtoupper(hash_hmac('sha256', $hashString, $this->getMerchantSecret()));
 
-        return $parameters['MAC'] === $calculatedMac;
+        if ($parameters['MAC'] !== $calculatedMac) {
+            throw new ChecksumMismatchException('MAC value does not match calculated value');
+        }
     }
 
     /**
      * Check given array contains all required parameters
      *
      * @param array $parameters Parameters to check
-     * @return boolean
+     *
+     * @throws RequiredFieldMissingException when required field is missing
      */
-    private static function allRequiredKeysExist(array $parameters)
+    private static function validateRequiredKeys(array $parameters)
     {
         if (!array_key_exists('MAC', $parameters)) {
-            return false;
+            throw new RequiredFieldMissingException('Required field MAC is missing');
+
         }
 
         foreach (self::$RESPONSE_MAC_FIELDS as $field) {
             if (!array_key_exists($field, $parameters)) {
-                return false;
+                throw new RequiredFieldMissingException('Required field ' . $field . ' is missing');
             }
         }
-
-        return true;
     }
 }
