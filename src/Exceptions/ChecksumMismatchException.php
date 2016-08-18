@@ -4,7 +4,7 @@
  *
  * @link https://www.checkout.fi/
  */
-namespace Omnipay\CheckoutFi\Message\Exceptions;
+namespace Omnipay\CheckoutFi\Exceptions;
 
 /**
  * Thrown when the MAC field value does not match

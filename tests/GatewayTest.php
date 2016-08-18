@@ -4,6 +4,9 @@ namespace Omnipay\CheckoutFi;
 
 use Omnipay\Tests\GatewayTestCase;
 use Omnipay\Omnipay;
+use Omnipay\CheckoutFi\Exceptions\UnsupportedAlgorithmException;
+use Omnipay\CheckoutFi\Exceptions\RequiredFieldMissingException;
+use Omnipay\CheckoutFi\Exceptions\ChecksumMismatchException;
 
 define('CHECKOUT_FI_MERCHANT_ID', '375917');
 define('CHECKOUT_FI_HASH_KEY', 'SAIPPUAKAUPPIAS');
@@ -92,5 +95,29 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame($response->getTransactionReference(), $this->returnParameters['REFERENCE']);
+    }
+
+    public function testCompletePurchaseHashMismatch()
+    {
+        $this->setExpectedException(ChecksumMismatchException::class);
+        $this->returnParameters['MAC'] = '123';
+        $request = $this->gateway->completePurchase($this->returnParameters);
+        $request->sendData($this->returnParameters);
+    }
+
+    public function testCompletePurchaseFieldMissing()
+    {
+        $this->setExpectedException(RequiredFieldMissingException::class);
+        unset($this->returnParameters['REFERENCE']);
+        $request = $this->gateway->completePurchase($this->returnParameters);
+        $request->sendData($this->returnParameters);
+    }
+
+    public function testCompletePurchaseUnsupportedAlgorithm()
+    {
+        $this->setExpectedException(UnsupportedAlgorithmException::class);
+        $this->returnParameters['ALGORITHM'] = '1';
+        $request = $this->gateway->completePurchase($this->returnParameters);
+        $request->sendData($this->returnParameters);
     }
 }

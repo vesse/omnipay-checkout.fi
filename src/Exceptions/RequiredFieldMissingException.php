@@ -4,7 +4,7 @@
  *
  * @link https://www.checkout.fi/
  */
-namespace Omnipay\CheckoutFi\Message\Exceptions;
+namespace Omnipay\CheckoutFi\Exceptions;
 
 /**
  * Thrown when response is missing a field

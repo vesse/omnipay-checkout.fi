@@ -6,9 +6,9 @@
  */
 namespace Omnipay\CheckoutFi\Message;
 
-use Omnipay\CheckoutFi\Message\Exceptions\UnsupportedAlgorithmException;
-use Omnipay\CheckoutFi\Message\Exceptions\RequiredFieldMissingException;
-use Omnipay\CheckoutFi\Message\Exceptions\ChecksumMismatchException;
+use Omnipay\CheckoutFi\Exceptions\UnsupportedAlgorithmException;
+use Omnipay\CheckoutFi\Exceptions\RequiredFieldMissingException;
+use Omnipay\CheckoutFi\Exceptions\ChecksumMismatchException;
 
 /**
  * Purchase complete message for Checkout.fi Omnipay driver. While this is a request
