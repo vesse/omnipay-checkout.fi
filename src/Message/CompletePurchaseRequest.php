@@ -1,12 +1,15 @@
 <?php
-/*
- * Checkout.fi driver for Omnipay PHP payment processing library
- * https://www.checkout.fi/
+/**
+ * Checkout.fi driver for Omnipay PHP payment processing library.
+ *
+ * @link https://www.checkout.fi/
  */
 namespace Omnipay\CheckoutFi\Message;
 
 /**
- * Purchase complete message for Checkout.fi Omnipay driver
+ * Purchase complete message for Checkout.fi Omnipay driver. While this is a request
+ * it is not sent to the checkout.fi API. Instead it validates the request that came
+ * from checkout.fi
  */
 class CompletePurchaseRequest extends AbstractRequest
 {
@@ -19,12 +22,18 @@ class CompletePurchaseRequest extends AbstractRequest
     // that was reviewed by Omnipay people in
     // https://github.com/thephpleague/omnipay/issues/246
 
+    /**
+     * {@inheritDoc}
+     */
     public function getData()
     {
         // Return parameters are in query string
         return $this->httpRequest->query->all();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function sendData($data)
     {
         if (!$this->validateResponseMac($data)) {
@@ -36,6 +45,11 @@ class CompletePurchaseRequest extends AbstractRequest
 
     /**
      * Validate the MAC field from purchase response
+     *
+     * @todo Use exceptions
+     *
+     * @param array $parameters Request parameters
+     * @return boolean
      */
     private function validateResponseMac(array $parameters = array())
     {
@@ -60,6 +74,12 @@ class CompletePurchaseRequest extends AbstractRequest
         return $parameters['MAC'] === $calculatedMac;
     }
 
+    /**
+     * Check given array contains all required parameters
+     *
+     * @param array $parameters Parameters to check
+     * @return boolean
+     */
     private static function allRequiredKeysExist(array $parameters)
     {
         if (!array_key_exists('MAC', $parameters)) {
