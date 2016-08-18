@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Thu, 18 Aug 2016 07:11:35 GMT
+Server: Apache
+Content-Length: 50
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+Yhtään tietoa ei siirtynyt POST:lla checkoutille

@@ -73,7 +73,7 @@ class PurchaseRequest extends AbstractAPIRequest
             'location'   => self::buildRedirectUrl($httpResponse->getLocation()),
             'isRedirect' => $httpResponse->isRedirect(),
             'body'       => $httpResponse->getBody(true),
-            'stamp'      => $data['STAMP'],
+            'reference'  => $data['REFERENCE'],
             'statusCode' => $httpResponse->getStatusCode()
         );
 

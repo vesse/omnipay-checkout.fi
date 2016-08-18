@@ -83,15 +83,18 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getMessage()
     {
-        $html = $this->data['body'];
-        $matches = array();
-        $match = preg_match('/kentässä: (.*?)</', $html, $matches);
-        if ($match === 0) {
+        // If redirected then there is no error
+        if ($this->isRedirect()) {
             return null;
         }
+
+        $matches = array();
+        // Try parsing the field that had a problem from the HTML response
+        $match = preg_match('/kentässä: (.*?)</', $this->data['body'], $matches);
         if ($match === 1) {
             return 'Error in field: ' . $matches[1];
+        } else {
+            return 'Error in transaction: ' . $this->data['body'];
         }
-        return 'Error in transaction';
     }
 }

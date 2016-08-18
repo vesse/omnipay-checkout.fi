@@ -85,7 +85,19 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\CheckoutFi\Message\PurchaseResponse', $response);
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getRedirectUrl());
-        $this->assertNotNull($response->getMessage());
+        $this->assertSame('Error in field: MAC', $response->getMessage());
+    }
+
+    public function testPurchaseFailureNotMatchingRegexp()
+    {
+        $this->setMockHttpResponse('PurchaseFailureNotMatchingRegexp.txt');
+
+        $response = $this->gateway->purchase($this->options)->send();
+
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertContains('Error in transaction', $response->getMessage());
     }
 
     public function testCompletePurchase()
@@ -109,6 +121,14 @@ class CheckoutFiGatewayTest extends GatewayTestCase
     {
         $this->setExpectedException(RequiredFieldMissingException::class);
         unset($this->returnParameters['REFERENCE']);
+        $request = $this->gateway->completePurchase($this->returnParameters);
+        $request->sendData($this->returnParameters);
+    }
+
+    public function testCompletePurchaseMacFieldMissing()
+    {
+        $this->setExpectedException(RequiredFieldMissingException::class);
+        unset($this->returnParameters['MAC']);
         $request = $this->gateway->completePurchase($this->returnParameters);
         $request->sendData($this->returnParameters);
     }

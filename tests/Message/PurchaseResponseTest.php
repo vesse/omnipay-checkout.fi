@@ -39,6 +39,11 @@ class PurchaseResponseTest extends GatewayTestCase
         $this->assertSame('https://payment.checkout.fi/UtNI1UaKX0/fi/new', $response->getRedirectUrl());
         $this->assertNull($response->getMessage());
         $this->assertSame(302, $response->getStatusCode());
+        $this->assertSame($this->options['REFERENCE'], $response->getTransactionReference());
+
+        // For coverage
+        $this->assertSame('GET', $response->getRedirectMethod());
+        $this->assertNull($response->getRedirectData());
     }
 
     public function testPurchaseFailure()

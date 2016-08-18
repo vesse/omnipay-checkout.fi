@@ -38,7 +38,12 @@ class CompletePurchaseRequestTest extends TestCase
             } else {
                 $this->assertFalse($response->isSuccessful());
             }
+
+            $this->assertSame($this->params['STATUS'], $response->getPaymentStatus());
         }
+
+        $response = new CompletePurchaseResponse($this->request, array());
+        $this->assertFalse($response->isSuccessful());
     }
 
     private static function calculateMac($params) {
