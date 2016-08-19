@@ -168,6 +168,38 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('Omnipay\CheckoutFi\Message\RefundResponse', $response);
         $this->assertTrue($response->isSuccessful());
+        $this->assertSame('2100', $response->getResponseStatusCode());
+        $this->assertSame('REFUNDED', $response->getMessage());
+        $this->assertSame(200, $response->getStatusCode());
     }
 
+    public function testRefundFailure()
+    {
+        $this->setMockHttpResponse('RefundFailure.txt');
+
+        $request = $this->gateway->refund($this->refundParameters);
+
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\RefundRequest', $request);
+
+        $response = $request->send();
+
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\RefundResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('2202', $response->getResponseStatusCode());
+        $this->assertSame('REFUND AMOUNT TOO BIG', $response->getMessage());
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testRefundFailureNoXmlBody()
+    {
+        $this->setMockHttpResponse('RefundFailureNoXml.txt');
+
+        $response = $this->gateway->refund($this->refundParameters)->send();
+
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\RefundResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getResponseStatusCode());
+        $this->assertNull($response->getMessage());
+        $this->assertSame(200, $response->getStatusCode());
+    }
 }

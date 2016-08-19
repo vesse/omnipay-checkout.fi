@@ -24,13 +24,13 @@ class RefundResponse extends AbstractResponse implements ResponseInterface
     {
         parent::__construct($request, $data);
 
-        if ($this->data instanceof \SimpleXMLElement) {
-            if (isset($this->data->response)) {
-                if (isset($this->data->response->statusCode)) {
-                    $this->statusCode = (string) $this->data->response->statusCode;
+        if (array_key_exists('xml', $this->data) && $this->data['xml'] instanceof \SimpleXMLElement) {
+            if (isset($this->data['xml']->response)) {
+                if (isset($this->data['xml']->response->statusCode)) {
+                    $this->statusCode = (string) $this->data['xml']->response->statusCode;
                 }
-                if (isset($this->data->response->statusMessage)) {
-                    $this->statusMessage = (string) $this->data->response->statusMessage;
+                if (isset($this->data['xml']->response->statusMessage)) {
+                    $this->statusMessage = (string) $this->data['xml']->response->statusMessage;
                 }
 
                 if ($this->statusCode === '2100') {
@@ -51,8 +51,29 @@ class RefundResponse extends AbstractResponse implements ResponseInterface
     /**
      * {@inheritDoc}
      */
-    public function isRedirect()
+    public function getMessage()
     {
-        return false;
+        return $this->statusMessage;
+    }
+
+    /**
+     * Get the status code from the received XMl
+     *
+     * @return string
+     */
+    public function getResponseStatusCode()
+    {
+        return $this->statusCode;
+    }
+
+
+    /**
+     * Get the HTTP response status code
+     *
+     * @return int The HTTP status code
+     */
+    public function getStatusCode()
+    {
+        return $this->data['statusCode'];
     }
 }

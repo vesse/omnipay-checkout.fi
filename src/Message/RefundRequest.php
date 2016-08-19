@@ -56,11 +56,17 @@ class RefundRequest extends AbstractAPIRequest
 
         // Response is always 200 OK with content type text/html, so just
         // try to load the body as XML and hope it works.
-        $xml = simplexml_load_string($httpResponse->getBody(true));
+        try {
+            $xml = simplexml_load_string($httpResponse->getBody(true));
+        } catch (\Exception $e) {
+            $xml = false;
+        }
 
-        return $this->response = new RefundResponse($this, $xml);
+        return $this->response = new RefundResponse($this, array(
+            'xml'        => $xml,
+            'statusCode' => $httpResponse->getStatusCode()
+        ));
     }
-
 
     /**
      * Get the stamp of the payment to be refunded
@@ -80,26 +86,5 @@ class RefundRequest extends AbstractAPIRequest
     public function setRefundStamp($stamp)
     {
         $this->setParameter('refundStamp', self::toString($stamp));
-    }
-
-
-    /**
-     * Get the recipient email address
-     *
-     * @return string
-     */
-    public function getRecipientEmail()
-    {
-        return $this->getParameter('email');
-    }
-
-    /**
-     * Set the recipient email address
-     *
-     * @param string $email Email address of the refund recipient
-     */
-    public function setRecipientEmail($email)
-    {
-        $this->setParameter('email', $email);
     }
 }
