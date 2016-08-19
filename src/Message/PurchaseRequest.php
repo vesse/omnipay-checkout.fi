@@ -63,8 +63,7 @@ class PurchaseRequest extends AbstractAPIRequest
      */
     public function sendData($data)
     {
-        $this->httpClient->setBaseUrl(Gateway::getPaymentUrl());
-        $request = $this->httpClient->post(null, null, $data);
+        $request = $this->httpClient->post(Gateway::getPaymentUrl(), null, $data);
         $request->getParams()->set('redirect.disable', true);
 
         $httpResponse = $request->send();

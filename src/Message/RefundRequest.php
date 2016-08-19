@@ -49,10 +49,7 @@ class RefundRequest extends AbstractAPIRequest
      */
     public function sendData($data)
     {
-        $this->httpClient->setBaseUrl(Gateway::getRefundUrl());
-        $request = $this->httpClient->post(null, null, $data);
-
-        $httpResponse = $request->send();
+        $httpResponse = $this->httpClient->post(Gateway::getRefundUrl(), null, $data)->send();
 
         // Response is always 200 OK with content type text/html, so just
         // try to load the body as XML and hope it works.

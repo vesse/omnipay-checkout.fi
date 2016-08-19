@@ -19,6 +19,8 @@ class Gateway extends AbstractGateway
 
     private static $REFUND_URL = 'https://rpcapi.checkout.fi/refund2';
 
+    private static $QUERY_URL = 'https://rpcapi.checkout.fi/poll';
+
     /**
      * {@inheritDoc}
      */
@@ -59,6 +61,17 @@ class Gateway extends AbstractGateway
     {
         return Gateway::$REFUND_URL;
     }
+
+    /**
+     * Get the query endpoint URL
+     *
+     * @return string
+     */
+    public static function getQueryUrl()
+    {
+        return Gateway::$QUERY_URL;
+    }
+
 
     /**
      * Get the merchant ID
@@ -142,5 +155,19 @@ class Gateway extends AbstractGateway
     public function refund(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\CheckoutFi\Message\RefundRequest', $parameters);
+    }
+
+    /**
+     * Query payment status
+     *
+     * This is an extension to the Omnipay gateway interface, but could be useful for services
+     * using only checkout.fi
+     *
+     * @param array $parameters HTTP request parameters
+     * @return \Omnipay\CheckoutFi\Message\QueryRequest
+     */
+    public function query(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\CheckoutFi\Message\QueryRequest', $parameters);
     }
 }

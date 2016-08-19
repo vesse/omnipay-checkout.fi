@@ -34,9 +34,9 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         );
 
         $this->purchaseParameters = array(
-            'STAMP'        => time(),
+            'STAMP'        => '1471325999',
             'AMOUNT'       => '1200',
-            'REFERENCE'    => '123456793',
+            'REFERENCE'    => '12345678901234567894',
             'DELIVERYDATE' => '20160910',
             'FIRSTNAME'    => 'Paying',
             'FAMILYNAME'   => 'Customer',
@@ -56,11 +56,17 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         );
 
         $this->refundParameters = array(
-            'STAMP'       => time(),
+            'STAMP'       => '1471325999',
             'REFUNDSTAMP' => '1471523196',
             'REFERENCE'   => '12345678901234567894',
             'AMOUNT'      => '1200',
             'EMAIL'       => 'someone@example.com'
+        );
+
+        $this->queryParameters = array(
+            'STAMP'     => '1471325999',
+            'REFERENCE' => '12345678901234567894',
+            'AMOUNT'    => '1200'
         );
     }
 
@@ -197,6 +203,34 @@ class CheckoutFiGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getResponseStatusCode());
         $this->assertNull($response->getMessage());
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testQuerySuccess()
+    {
+        $this->setMockHttpResponse('QuerySuccess.txt');
+        $request = $this->gateway->query($this->queryParameters);
+
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\QueryRequest', $request);
+
+        $response = $request->send();
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\QueryResponse', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('2', $response->getResponseStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testQueryFailure()
+    {
+        $this->setMockHttpResponse('QueryFailure.txt');
+        $request = $this->gateway->query($this->queryParameters);
+
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\QueryRequest', $request);
+
+        $response = $request->send();
+        $this->assertInstanceOf('Omnipay\CheckoutFi\Message\QueryResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getResponseStatusCode());
         $this->assertSame(200, $response->getStatusCode());
     }
 }

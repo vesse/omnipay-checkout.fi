@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Date: Fri, 19 Aug 2016 09:55:26 GMT
+Server: Apache
+Content-Length: 74
+Connection: close
+Content-Type: text/xml;charset=utf-8
+
+<?xml version="1.0" encoding="utf-8"?><trade>
+ <status>2</status>
+</trade>
