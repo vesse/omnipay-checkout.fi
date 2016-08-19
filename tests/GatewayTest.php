@@ -4,9 +4,6 @@ namespace Omnipay\CheckoutFi;
 
 use Omnipay\Tests\GatewayTestCase;
 use Omnipay\Omnipay;
-use Omnipay\CheckoutFi\Exceptions\UnsupportedAlgorithmException;
-use Omnipay\CheckoutFi\Exceptions\RequiredFieldMissingException;
-use Omnipay\CheckoutFi\Exceptions\ChecksumMismatchException;
 
 define('CHECKOUT_FI_MERCHANT_ID', '375917');
 define('CHECKOUT_FI_HASH_KEY', 'SAIPPUAKAUPPIAS');
@@ -126,7 +123,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseHashMismatch()
     {
-        $this->setExpectedException(ChecksumMismatchException::class);
+        $this->setExpectedException('\Omnipay\CheckoutFi\Exceptions\ChecksumMismatchException');
         $this->complatePurchaseParameters['MAC'] = '123';
         $request = $this->gateway->completePurchase($this->complatePurchaseParameters);
         $request->sendData($this->complatePurchaseParameters);
@@ -134,7 +131,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseFieldMissing()
     {
-        $this->setExpectedException(RequiredFieldMissingException::class);
+        $this->setExpectedException('\Omnipay\CheckoutFi\Exceptions\RequiredFieldMissingException');
         unset($this->complatePurchaseParameters['REFERENCE']);
         $request = $this->gateway->completePurchase($this->complatePurchaseParameters);
         $request->sendData($this->complatePurchaseParameters);
@@ -142,7 +139,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseMacFieldMissing()
     {
-        $this->setExpectedException(RequiredFieldMissingException::class);
+        $this->setExpectedException('\Omnipay\CheckoutFi\Exceptions\RequiredFieldMissingException');
         unset($this->complatePurchaseParameters['MAC']);
         $request = $this->gateway->completePurchase($this->complatePurchaseParameters);
         $request->sendData($this->complatePurchaseParameters);
@@ -150,7 +147,7 @@ class CheckoutFiGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseUnsupportedAlgorithm()
     {
-        $this->setExpectedException(UnsupportedAlgorithmException::class);
+        $this->setExpectedException('\Omnipay\CheckoutFi\Exceptions\UnsupportedAlgorithmException');
         $this->complatePurchaseParameters['ALGORITHM'] = '1';
         $request = $this->gateway->completePurchase($this->complatePurchaseParameters);
         $request->sendData($this->complatePurchaseParameters);
