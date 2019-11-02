@@ -1,5 +1,7 @@
 # omnipay-checkout.fi
 
+**Obsolete** This driver uses Checkout Finland legacy API and should not be used
+
 **[Checkout.fi](http://www.checkout.fi/) driver for the Omnipay PHP payment processing library**
 
 [![Build Status](https://travis-ci.org/vesse/omnipay-checkout.fi.png?branch=master)](https://travis-ci.org/vesse/omnipay-checkout.fi)
